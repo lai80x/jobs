@@ -1,0 +1,74 @@
+<script src="/static/js/jquery-1.12.4.js"></script>
+<script src="/static/js/jquery.dynatable.js"></script>
+<script>
+    function f3() {
+        var x = $('#search').val();
+        var mr = document.getElementById("mnordo");
+        var er = document.getElementById("enordo");
+        var url;
+        var para;
+        if (mr.checked) {
+            url = "/logs/search";
+            para = {mold:x};
+        } else if (er.checked) {
+            url = "/logs/searchemp";
+            para = {emp:x};
+        };
+        var t = 0;
+        $('#displayres').empty();
+        $.post(
+        url,
+        para,
+        function(data) {
+            for (var i=0; i<data.length; i++) {
+               var row = $(
+                    '<tr><td>'+data[i].Empno+
+                    '</td><td>'+data[i].Empname+
+                    '</td><td>'+data[i].Moldsn+
+                    '</td><td>'+data[i].Moldname+
+                    '</td><td>'+data[i].Codeno+
+                    '</td><td>'+data[i].Descrip+
+                    '</td><td>'+data[i].Timestarted+
+                    '</td><td>'+data[i].Timecompleted+
+                    '</td><td>'+data[i].Cal+'</td></tr>'
+               );
+               t = t+data[i].Cal;
+               $('#result').append(row);
+            };
+            $('#displayres').append('项目参与总人数：'+data.length+'人；总用时：'+t+'小时。');
+        },
+        "json"
+        );
+
+    };
+
+    function f1() {
+        $('#search').empty();
+        $.post(
+        "/emp/getall",
+        function(data) {
+            for (var i=0; i<data.length; i++) {
+               var row = $('<option id='+data[i].Id+' value='+data[i].Empno+'>'+data[i].Empno+'_'+data[i].Empname+
+                '</option>');
+               $('#search').append(row);
+            }
+        },
+        "json"
+        );
+    };
+
+    function f2() {
+        $('#search').empty();
+        $.post(
+        "/mold/getall",
+        function(data) {
+            for (var i=0; i<data.length; i++) {
+               var row = $('<option id='+data[i].Id+' value='+data[i].Moldsn+'>'+data[i].Moldsn+'_'+data[i].Moldname+
+                '</option>');
+               $('#search').append(row);
+            }
+        },
+        "json"
+        );
+    };
+</script>

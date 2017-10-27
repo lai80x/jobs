@@ -1,0 +1,41 @@
+<script src="/static/js/jquery-1.12.4.js"></script>
+<script src="/static/js/jquery.dynatable.js"></script>
+<script>
+    $.post(
+        "/emp/getall",
+        function(data) {
+            for (var i=0; i<data.length; i++) {
+               var row = $('<option id='+data[i].Id+' value='+data[i].Id+'>'+data[i].Empno+'_'+data[i].Empname+
+                '</option>');
+               $('#example').append(row);
+            }
+        },
+        "json"
+    );
+    function f1() {
+        $.post(
+        "/emp/getall",
+        function(data) {
+            for (var i=0; i<data.length; i++) {
+               var row = $('<option id='+data[i].Id+' value='+data[i].Id+'>'+data[i].Empno+'_'+data[i].Empname+
+                '</option>');
+               $('#search').append(row);
+            }
+        },
+        "json"
+        );
+    };
+    function f2() {
+        $.post(
+        "/codes/getall",
+        function(data) {
+            for (var i=0; i<data.length; i++) {
+               var row = $('<option id='+data[i].Id+' value='+data[i].Id+'>'+data[i].Codeno+'_'+data[i].Descrip+
+                '</option>');
+               $('#search').append(row);
+            }
+        },
+        "json"
+        );
+    };
+</script>

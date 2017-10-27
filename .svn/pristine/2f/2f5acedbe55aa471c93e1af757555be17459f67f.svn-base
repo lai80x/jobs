@@ -1,0 +1,1 @@
+/root/go/src/jobs/views/logs/edit.tpl
